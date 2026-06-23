@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deck Killer"
+  short_description: "Stress-test decks before skeptical audiences do."
+  default_prompt: "Run Deck Killer on this deck or presentation and identify weak claims, audience questions, narrative fixes, and the single strongest objection."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Risk Killer"
+  short_description: "Find what breaks: edge cases, integrations, and launch."
+  default_prompt: "Run Risk Killer on this plan and list the breakpoints, must-test failures, rollback/recovery needs, and the first fix."

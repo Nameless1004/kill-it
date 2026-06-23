@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bullshit Killer"
+  short_description: "Remove vague claims, jargon, and empty hype."
+  default_prompt: "Run Bullshit Killer on this text and return the vague claims, missing proof, plain rewrite, and strongest honest version."

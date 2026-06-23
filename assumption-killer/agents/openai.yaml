@@ -1,0 +1,4 @@
+interface:
+  display_name: "Assumption Killer"
+  short_description: "Expose the unproven beliefs, optimism, and unargued choices behind a plan."
+  default_prompt: "Run Assumption Killer on this idea and identify the critical assumptions, evidence check, strongest counterargument, fastest test, and reversal trigger."

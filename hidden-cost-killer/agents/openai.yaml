@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hidden Cost Killer"
+  short_description: "Expose costs that plans usually forget."
+  default_prompt: "Run Hidden Cost Killer on this plan and list hidden costs, cost multipliers, missing budget lines, controls, and the biggest cost bomb."

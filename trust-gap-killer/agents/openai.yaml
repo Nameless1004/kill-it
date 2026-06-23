@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trust Gap Killer"
+  short_description: "Find where users or buyers will not trust the system."
+  default_prompt: "Run Trust Gap Killer on this product or feature and identify trust gaps, evidence/control needs, responsibility boundaries, and the first fix."

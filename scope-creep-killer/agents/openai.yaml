@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scope Creep Killer"
+  short_description: "Cut bloated requirements back to the core job."
+  default_prompt: "Run Scope Creep Killer on this scope and identify the core job, creep, hidden multipliers, MVP cut, and decision needed now."

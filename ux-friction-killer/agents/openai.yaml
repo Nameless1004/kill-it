@@ -1,0 +1,4 @@
+interface:
+  display_name: "UX Friction Killer"
+  short_description: "Find where users hesitate, misunderstand, or abandon."
+  default_prompt: "Run UX Friction Killer on this flow or screen and identify friction points, missing states, copy/UI fixes, and the highest-impact fix."
