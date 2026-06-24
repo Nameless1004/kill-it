@@ -3,13 +3,11 @@
   "version": "0.1.0",
   "description": "Adversarial agent skills that attack your ideas before reality does.",
   "bin": {
-    "killit": "bin/killit.js",
-    "nameless": "bin/killit.js"
+    "killit": "bin/killit.js"
   },
   "files": [
     "bin",
     "kill-it",
-    "concrete",
     "README.md"
   ],
   "license": "MIT",

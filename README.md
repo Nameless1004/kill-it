@@ -1,74 +1,51 @@
-# Nameless Skill Store
+# kill-it
 
-Personal skill repository for Nameless agent workflows.
+Most AI helps you build. `kill-it` tries to break the thing before reality does.
 
-## Setup
+Bring an idea, PRD, pitch, product plan, design, architecture choice, roadmap, or launch plan. `kill-it` attacks the blind spot you did not defend yet, waits for your answer, then keeps pressing until the idea either survives or exposes the thing that can kill it.
 
-Link the local CLI from this repo:
+## What It Solves
 
-```bash
-cd /Users/jaeho/Desktop/kill-it
-npm link
-```
+People are bad at seeing the weak point in their own plans. They defend the parts they already understand and miss the assumption, cost, edge case, trust gap, or scope problem that makes the work collapse later.
 
-Install into Codex:
+`kill-it` gives you a hostile pre-mortem:
 
-```bash
-nameless init --codex
-```
+- Finds the flaw you are most likely to rationalize away
+- Separates fatal risks from annoying but survivable issues
+- Forces one clean defense at a time instead of dumping generic feedback
+- Ends by naming what actually survived, not only what broke
 
-Other targets:
+## How It Works
 
-```bash
-nameless init --claude
-nameless init --all
-nameless init --all --force
-nameless init --all --dry-run
-```
-
-Remove installed skills:
-
-```bash
-nameless remove --codex
-nameless remove --claude
-nameless remove --all
-```
-
-Targets:
-
-| Flag | Location |
-|---|---|
-| `--codex` | `~/.codex/skills` |
-| `--claude` | `~/.claude/skills` |
-| `--all` | both |
-
-Legacy commands like `killit init --codex` and `killit remove --codex` still work, but new docs should use `nameless init --codex`.
-
-## Skills
-
-| Skill | Use it for |
-|---|---|
-| `kill-it` | Stress-test ideas, plans, PRDs, pitches, and designs until the weak point is exposed |
-| `concrete` | Turn vague requirements, work specs, designs, or workflows into concrete executable specs |
-
-## kill-it
-
-`kill-it` is the adversarial front door. It attacks one weakness at a time, waits for the user's defense, labels each hit by severity, and ends by naming what survived.
-
-- Attacks what the user did not consider, not what they already defended
-- One attack at a time
-- Severity labels: **Instant Kill / Major Wound / Bleeding Risk / Scratch**
-- Final synthesis: **Survived / Still Dangerous / Real Weapon / Next Proof / Verdict**
-
-Session shape:
+`kill-it` runs as an adversarial interrogation.
 
 ```text
-Attack 1 -> defense -> judgment
-Attack 2 -> defense -> judgment
-Attack 3 -> defense -> final synthesis
+Attack 1 -> your defense -> judgment
+Attack 2 -> your defense -> judgment
+Attack 3 -> your defense -> final synthesis
 ```
 
-The focused killer lenses are bundled inside `kill-it/killers/`, not installed as separate top-level skills:
+Each attack is labeled by severity:
+
+| Severity | Meaning |
+|---|---|
+| **Instant Kill** | If true, the idea cannot work |
+| **Major Wound** | The idea can work, but adoption, trust, launch, or scale breaks |
+| **Bleeding Risk** | Survivable now, dangerous if ignored |
+| **Scratch** | Worth fixing, but not core to whether the idea lives |
+
+The final synthesis answers:
+
+- **Survived**: what held up under attack
+- **Still Dangerous**: unresolved risks ranked by severity
+- **Real Weapon**: the strongest surviving advantage, insight, proof, or wedge
+- **Next Proof**: the one thing to prove next
+- **Verdict**: Survived / Wounded / Dead
+- **Kill Shot**: the attack it could not answer
+
+## Killer Lenses
+
+Focused lenses are bundled inside `kill-it/killers/`. They are internal references, not separate top-level skills.
 
 | Lens | Kills |
 |---|---|
@@ -81,76 +58,50 @@ The focused killer lenses are bundled inside `kill-it/killers/`, not installed a
 | `ux-friction-killer` | Where users hesitate, misunderstand, abandon, or need missing states |
 | `deck-killer` | Weak claims and objections a skeptical room will raise |
 
-## concrete
+## Use It When
 
-`concrete` takes an abstract or incomplete artifact and keeps asking the missing questions until it is specific enough to execute.
+- You are too attached to an idea and need the strongest objection
+- A PRD or pitch sounds convincing but has not been stress-tested
+- A feature plan assumes users, buyers, or operators will behave nicely
+- A launch, integration, or workflow has too many hidden failure modes
+- You want to know whether the idea is actually strong or just well-worded
 
-Bundled lenses live inside `concrete/lenses/`:
+## Install
 
-| Lens | Use it for |
+Link the local CLI from this repo:
+
+```bash
+cd /Users/jaeho/Desktop/kill-it
+npm link
+```
+
+Install into Codex:
+
+```bash
+killit init --codex
+```
+
+Other targets:
+
+```bash
+killit init --claude
+killit init --all
+killit init --all --force
+killit init --all --dry-run
+```
+
+Remove installed skills:
+
+```bash
+killit remove --codex
+killit remove --claude
+killit remove --all
+```
+
+Targets:
+
+| Flag | Location |
 |---|---|
-| `requirements` | PRDs, feature requests, acceptance criteria, product behavior |
-| `work-spec` | Engineering tasks, tickets, implementation plans, handoffs |
-| `design` | UI/UX flows, screen specs, interaction states, prototypes |
-| `workflow` | Operational processes, approvals, support paths, business handoffs |
-| `data-contract` | APIs, schemas, events, integrations, sync behavior |
-| `rollout` | Launches, migrations, releases, experiments, rollback paths |
-
-It focuses on missing:
-
-- Intent, success signals, defaults, and non-goals
-- Inputs, actors, permissions, ownership, and handoffs
-- Empty/loading/success/error/cancelled/retry states
-- Edge cases, limits, concurrency, vendor failure, and recovery paths
-- Data ownership, freshness, deletion, audit, and privacy
-
-During questioning, `concrete` should not expose internal labels like lens, category, risk, or locked decisions by default. It asks one natural question at a time, then saves the structured working notes for the final artifact.
-
-It should not become a survey. A/B/C/D options are only for decisions with a few clear paths; otherwise it asks a plain question and leaves room for a custom answer.
-
-Final output depends on the request. It should not force `Execution Brief` every time.
-
-For improvement requests:
-
-```markdown
-## 구체화된 개선안
-
-### 1. <개선명>
-- **문제:** <현재 무엇이 애매하거나 불편한지>
-- **변경:** <실제로 무엇을 바꿀지>
-- **동작:** <사용자/시스템 관점의 구체 동작>
-- **예외:** <edge case 또는 제외할 상황>
-- **완료 기준:** <작업자가 확인할 수 있는 기준>
-```
-
-For task/spec/handoff requests:
-
-```markdown
-## 실행 브리프
-<directly usable work brief>
-
-- **목표:** <specific outcome>
-- **사용자 / 행위자:** <who this is for or who performs it>
-- **범위:** <included behavior, screens, systems, or work items>
-- **제외:** <explicit exclusions>
-- **주요 흐름:** <step-by-step normal path>
-- **확정된 결정:** <decisions clarified>
-- **의존성:** <systems, data, approvals, designs, or constraints>
-- **완료 기준:** <observable completion criteria>
-
-## 구체 명세
-<execution-ready spec>
-
-## 동작 매트릭스
-| 상황 | 기대 동작 | 담당/상태 |
-|---|---|---|
-
-## 예외와 복구
-- <exception> -> <handling>
-
-## 비목표
-- <excluded behavior>
-
-## 실행 가능 여부
-Yes / No, because <reason>
-```
+| `--codex` | `~/.codex/skills` |
+| `--claude` | `~/.claude/skills` |
+| `--all` | both |

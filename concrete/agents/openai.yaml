@@ -1,4 +1,0 @@
-interface:
-  display_name: "Concrete"
-  short_description: "Turn vague work into a concrete spec."
-  default_prompt: "Run Concrete on this. Choose the right lens for the artifact, then ask one focused question at a time about missing decisions, exceptions, boundaries, states, defaults, constraints, ownership, and non-goals until it is concrete enough to execute."

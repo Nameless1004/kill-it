@@ -6,10 +6,10 @@ const path = require("node:path");
 
 const SKILLS = [
   "kill-it",
-  "concrete",
 ];
 
 const LEGACY_SKILLS = [
+  "concrete",
   "specify",
   "requirements-killer",
   "assumption-killer",
@@ -30,20 +30,15 @@ const TARGETS = {
 const repoRoot = path.resolve(__dirname, "..");
 
 function usage() {
-  console.log(`nameless
+  console.log(`killit
 
 Usage:
-  nameless init --codex
-  nameless init --claude
-  nameless init --all
-  nameless remove --codex
-  nameless remove --claude
-  nameless remove --all
-
-Legacy:
-  killit nameless --init
   killit init --codex
+  killit init --claude
+  killit init --all
   killit remove --codex
+  killit remove --claude
+  killit remove --all
 
 Options:
   --codex     Target ~/.codex/skills
@@ -58,11 +53,8 @@ Options:
 function parseArgs(argv) {
   const args = new Set(argv);
   const validArgs = new Set([
-    "nameless",
     "init",
     "remove",
-    "--init",
-    "--remove",
     "--codex",
     "--claude",
     "--all",
@@ -83,29 +75,9 @@ function parseArgs(argv) {
   }
 
   const [entry] = argv;
-
-  if (entry === "nameless") {
-    if (args.has("--init") && args.has("--remove")) {
-      return { error: "Choose only one action: --init or --remove" };
-    }
-    if (!args.has("--init") && !args.has("--remove")) {
-      return { error: "Choose an action: --init or --remove" };
-    }
-
-    const command = args.has("--remove") ? "remove" : "init";
-    const platforms = parsePlatforms(args, ["codex"]);
-
-    return {
-      command,
-      platforms,
-      force: args.has("--force"),
-      dryRun: args.has("--dry-run"),
-    };
-  }
-
   const command = entry;
   if (command !== "init" && command !== "remove") {
-    return { error: "Expected command: nameless, init, or remove" };
+    return { error: "Expected command: init or remove" };
   }
 
   const platforms = parsePlatforms(args, []);
