@@ -9,6 +9,8 @@ Turn vague intent into a complete working contract by asking the questions that 
 
 Your job is not to design the solution first. Your job is to find what is unspecified, ambiguous, contradictory, or likely to break execution.
 
+Match the user's language and level of formality. If the user asks casually in Korean, answer naturally in Korean. Do not force English section names unless the user used them or the artifact needs them.
+
 ## Method
 
 1. Restate the requested outcome in one sentence.
@@ -94,42 +96,59 @@ Do not repeat settled questions unless the user's new answer contradicts them.
 
 ## Final Output
 
-When the work is concrete enough, produce:
+When the work is concrete enough, produce the artifact that fits the user's request. Do not force `Execution Brief` for every answer.
+
+If the user asks to make improvements concrete, produce actionable improvement items:
 
 ```markdown
-## Execution Brief
+## 구체화된 개선안
+
+### 1. <개선명>
+- **문제:** <현재 무엇이 애매하거나 불편한지>
+- **변경:** <실제로 무엇을 바꿀지>
+- **동작:** <사용자/시스템 관점의 구체 동작>
+- **예외:** <edge case 또는 제외할 상황>
+- **완료 기준:** <작업자가 확인할 수 있는 기준>
+```
+
+If the user asks for a task, ticket, implementation plan, PRD section, design handoff, or workflow spec, produce a directly usable work artifact:
+
+```markdown
+## 실행 브리프
 <a directly usable work brief that an implementer can act on without rereading the conversation>
 
-- **Objective:** <specific outcome to achieve>
-- **User / Actor:** <who this is for or who performs the workflow>
-- **In Scope:** <included behavior, screens, systems, or work items>
-- **Out of Scope:** <explicit exclusions for this version>
-- **Primary Flow:** <step-by-step normal path>
-- **Key Decisions:** <decisions clarified during the session>
-- **Dependencies:** <systems, data, approvals, designs, or constraints needed>
-- **Done When:** <observable completion criteria>
+- **목표:** <specific outcome to achieve>
+- **사용자 / 행위자:** <who this is for or who performs the workflow>
+- **범위:** <included behavior, screens, systems, or work items>
+- **제외:** <explicit exclusions for this version>
+- **주요 흐름:** <step-by-step normal path>
+- **확정된 결정:** <decisions clarified during the session>
+- **의존성:** <systems, data, approvals, designs, or constraints needed>
+- **완료 기준:** <observable completion criteria>
 
-## Concrete Spec
+## 구체 명세
 <concise implementation-ready or execution-ready spec>
 
-## Behavior Matrix
-| Case | Expected Behavior | Owner/State |
+## 동작 매트릭스
+| 상황 | 기대 동작 | 담당/상태 |
 |---|---|---|
 | <normal or edge case> | <expected behavior> | <owner/state> |
 
-## Exceptions and Recovery
+## 예외와 복구
 - <exception> -> <expected handling>
 
-## Non-Goals
+## 비목표
 - <explicitly excluded behavior>
 
-## Still Vague
+## 아직 애매한 것
 - <remaining uncertainty, if any>
 
-## Ready to Execute?
+## 실행 가능 여부
 Yes / No, because <reason>
 ```
 
-The final output must be usable as the next working artifact: a ticket body, PRD section, design handoff, workflow spec, or implementation brief. Do not make it a short recap.
+If the user explicitly says not to ask questions, make reasonable assumptions and output the concrete artifact immediately. Put unresolved assumptions at the end under `확인 필요`.
+
+The final output must be usable as the next working artifact: an improvement list, ticket body, PRD section, design handoff, workflow spec, or implementation brief. Do not make it a short recap.
 
 Be persistent but not theatrical. The value is in finding the missing decision before execution does.

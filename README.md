@@ -108,34 +108,49 @@ During questioning, `concrete` should not expose internal labels like lens, cate
 
 It should not become a survey. A/B/C/D options are only for decisions with a few clear paths; otherwise it asks a plain question and leaves room for a custom answer.
 
-Final output:
+Final output depends on the request. It should not force `Execution Brief` every time.
+
+For improvement requests:
 
 ```markdown
-## Execution Brief
+## 구체화된 개선안
+
+### 1. <개선명>
+- **문제:** <현재 무엇이 애매하거나 불편한지>
+- **변경:** <실제로 무엇을 바꿀지>
+- **동작:** <사용자/시스템 관점의 구체 동작>
+- **예외:** <edge case 또는 제외할 상황>
+- **완료 기준:** <작업자가 확인할 수 있는 기준>
+```
+
+For task/spec/handoff requests:
+
+```markdown
+## 실행 브리프
 <directly usable work brief>
 
-- **Objective:** <specific outcome>
-- **User / Actor:** <who this is for or who performs it>
-- **In Scope:** <included behavior, screens, systems, or work items>
-- **Out of Scope:** <explicit exclusions>
-- **Primary Flow:** <step-by-step normal path>
-- **Key Decisions:** <decisions clarified>
-- **Dependencies:** <systems, data, approvals, designs, or constraints>
-- **Done When:** <observable completion criteria>
+- **목표:** <specific outcome>
+- **사용자 / 행위자:** <who this is for or who performs it>
+- **범위:** <included behavior, screens, systems, or work items>
+- **제외:** <explicit exclusions>
+- **주요 흐름:** <step-by-step normal path>
+- **확정된 결정:** <decisions clarified>
+- **의존성:** <systems, data, approvals, designs, or constraints>
+- **완료 기준:** <observable completion criteria>
 
-## Concrete Spec
+## 구체 명세
 <execution-ready spec>
 
-## Behavior Matrix
-| Case | Expected Behavior | Owner/State |
+## 동작 매트릭스
+| 상황 | 기대 동작 | 담당/상태 |
 |---|---|---|
 
-## Exceptions and Recovery
+## 예외와 복구
 - <exception> -> <handling>
 
-## Non-Goals
+## 비목표
 - <excluded behavior>
 
-## Ready to Execute?
+## 실행 가능 여부
 Yes / No, because <reason>
 ```
