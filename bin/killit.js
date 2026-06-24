@@ -165,6 +165,9 @@ function removeDir(dest, { dryRun }) {
 }
 
 function install({ platforms, force, dryRun }) {
+  let skipped = 0;
+  let changed = 0;
+
   for (const platform of platforms) {
     const targetRoot = TARGETS[platform];
     console.log(`${platform}: ${targetRoot}`);
@@ -179,24 +182,44 @@ function install({ platforms, force, dryRun }) {
         path.join(targetRoot, skill),
         { force, dryRun },
       );
+      if (status === "skipped" || status === "would skip") skipped += 1;
+      if (status === "installed" || status === "overwritten") changed += 1;
       console.log(`  ${status.padEnd(15)} ${skill}`);
     }
   }
 
-  if (!force) {
+  if (dryRun) {
+    console.log("\nDry run only. No files changed.");
+  } else if (skipped > 0 && !force) {
     console.log("\nExisting folders are skipped. Re-run with --force to overwrite them.");
+  } else {
+    console.log(`\nInstalled ${changed} skill folder${changed === 1 ? "" : "s"}.`);
   }
 }
 
 function remove({ platforms, dryRun }) {
+  let removed = 0;
+  let missing = 0;
+
   for (const platform of platforms) {
     const targetRoot = TARGETS[platform];
     console.log(`${platform}: ${targetRoot}`);
 
     for (const skill of SKILLS) {
       const status = removeDir(path.join(targetRoot, skill), { dryRun });
+      if (status === "removed" || status === "would remove") removed += 1;
+      if (status === "missing") missing += 1;
       console.log(`  ${status.padEnd(15)} ${skill}`);
     }
+  }
+
+  if (dryRun) {
+    console.log("\nDry run only. No files changed.");
+  } else {
+    console.log(
+      `\nRemoved ${removed} Nameless skill folder${removed === 1 ? "" : "s"}. ` +
+        `${missing} already missing.`,
+    );
   }
 }
 
