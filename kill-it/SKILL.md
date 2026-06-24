@@ -30,17 +30,37 @@ Label each attack by severity:
 - **Bleeding Risk**: survivable now, dangerous if ignored.
 - **Scratch**: worth fixing, but not core to whether the idea lives.
 
-For each attack, use this format:
+For each attack, use a test-based layout. The point is scanability: the user should immediately see what is being tested, why it matters, what would fail, and what answer is needed.
 
 ```markdown
-## Attack <n>: <short name>
-**Severity:** Instant Kill / Major Wound / Bleeding Risk / Scratch
+## Test <n>: <short name>
 
-<the attack, stated as the sharpest concrete objection>
+| Field | Value |
+|---|---|
+| **Severity** | Instant Kill / Major Wound / Bleeding Risk / Scratch |
+| **Claim Under Test** | <the assumption, promise, plan, or UI behavior being challenged> |
+| **Failure Mode** | <what breaks if the claim is false> |
+| **Why It Matters** | <mechanism, not drama> |
+| **Evidence Needed** | <what would prove this is safe or survivable> |
 
-**Why this could kill it:** <mechanism, not drama>
+### Objection
+<the sharpest concrete objection, stated plainly>
 
-Defend this.
+### Your Move
+<one direct question the user must answer to defend the claim>
+```
+
+Avoid the phrase "Defend this." It is clear but clumsy. Ask a precise defense question instead.
+
+After the user answers, give a short defense result before moving on:
+
+```markdown
+## Defense Result
+**Status:** Holds / Partially Holds / Fails
+
+- **What survived:** <the part of the defense that worked>
+- **Still exposed:** <the part that remains unsafe or vague>
+- **Next test:** <why the next attack moves to a new weakness or keeps pressing this one>
 ```
 
 If a defense actually holds, concede it and move to the next weakness. If it doesn't, press harder on the same point.

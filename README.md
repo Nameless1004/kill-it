@@ -17,12 +17,12 @@ People are bad at seeing the weak point in their own plans. They defend the part
 
 ## How It Works
 
-`kill-it` runs as an adversarial interrogation.
+`kill-it` runs as an adversarial test loop.
 
 ```text
-Attack 1 -> your defense -> judgment
-Attack 2 -> your defense -> judgment
-Attack 3 -> your defense -> final synthesis
+Test 1 -> your defense -> defense result
+Test 2 -> your defense -> defense result
+Test 3 -> your defense -> final synthesis
 ```
 
 Each attack is labeled by severity:
@@ -42,6 +42,16 @@ The final synthesis answers:
 - **Next Proof**: the one thing to prove next
 - **Verdict**: Survived / Wounded / Dead
 - **Kill Shot**: the attack it could not answer
+
+Each test uses a scan-friendly layout:
+
+| Field | Meaning |
+|---|---|
+| **Claim Under Test** | The assumption, promise, plan, or behavior being challenged |
+| **Failure Mode** | What breaks if the claim is false |
+| **Why It Matters** | The mechanism that makes it dangerous |
+| **Evidence Needed** | What would prove the claim is safe |
+| **Your Move** | The specific question the user must answer |
 
 ## Killer Lenses
 
