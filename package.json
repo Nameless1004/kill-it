@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Adversarial agent skills that attack your ideas before reality does.",
   "bin": {
-    "killit": "bin/killit.js"
+    "killit": "bin/killit.js",
+    "nameless": "bin/killit.js"
   },
   "files": [
     "bin",
@@ -12,6 +13,7 @@
     "deck-killer",
     "hidden-cost-killer",
     "kill-it",
+    "requirements-killer",
     "risk-killer",
     "scope-creep-killer",
     "trust-gap-killer",

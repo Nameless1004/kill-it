@@ -1,4 +1,4 @@
 interface:
   display_name: "Kill It"
-  short_description: "A hostile interrogation that tries to break your idea."
-  default_prompt: "Run Kill It on this idea. Attack its weakest point one shot at a time, wait for my defense, then give the survival verdict and kill shot."
+  short_description: "Break an idea, then name what survived."
+  default_prompt: "Run Kill It on this idea. Attack one weakness at a time for three rounds, label each attack by severity, wait for my defense, then close with Survived, Still Dangerous, Real Weapon, Next Proof, Verdict, and Kill Shot."

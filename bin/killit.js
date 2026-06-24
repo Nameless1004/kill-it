@@ -6,6 +6,7 @@ const path = require("node:path");
 
 const SKILLS = [
   "kill-it",
+  "requirements-killer",
   "assumption-killer",
   "risk-killer",
   "bullshit-killer",
@@ -24,16 +25,25 @@ const TARGETS = {
 const repoRoot = path.resolve(__dirname, "..");
 
 function usage() {
-  console.log(`killit
+  console.log(`nameless
 
 Usage:
+  nameless init --codex
+  nameless init --claude
+  nameless init --all
+  nameless remove --codex
+  nameless remove --claude
+  nameless remove --all
+
+Legacy:
+  killit nameless --init
   killit init --codex
-  killit init --claude
-  killit init --codex --claude
   killit remove --codex
-  killit remove --claude
 
 Options:
+  --codex     Target ~/.codex/skills
+  --claude    Target ~/.claude/skills
+  --all       Target both Codex and Claude
   --force      Overwrite existing skill folders during init
   --dry-run    Show changes without writing files
   --help       Show this help
@@ -43,10 +53,14 @@ Options:
 function parseArgs(argv) {
   const args = new Set(argv);
   const validArgs = new Set([
+    "nameless",
     "init",
     "remove",
+    "--init",
+    "--remove",
     "--codex",
     "--claude",
+    "--all",
     "--force",
     "--dry-run",
     "--help",
@@ -63,17 +77,36 @@ function parseArgs(argv) {
     }
   }
 
-  const [command] = argv;
-  if (command !== "init" && command !== "remove") {
-    return { error: "Expected command: init or remove" };
+  const [entry] = argv;
+
+  if (entry === "nameless") {
+    if (args.has("--init") && args.has("--remove")) {
+      return { error: "Choose only one action: --init or --remove" };
+    }
+    if (!args.has("--init") && !args.has("--remove")) {
+      return { error: "Choose an action: --init or --remove" };
+    }
+
+    const command = args.has("--remove") ? "remove" : "init";
+    const platforms = parsePlatforms(args, ["codex"]);
+
+    return {
+      command,
+      platforms,
+      force: args.has("--force"),
+      dryRun: args.has("--dry-run"),
+    };
   }
 
-  const platforms = [];
-  if (args.has("--codex")) platforms.push("codex");
-  if (args.has("--claude")) platforms.push("claude");
+  const command = entry;
+  if (command !== "init" && command !== "remove") {
+    return { error: "Expected command: nameless, init, or remove" };
+  }
+
+  const platforms = parsePlatforms(args, []);
 
   if (platforms.length === 0) {
-    return { error: "Choose at least one target: --codex or --claude" };
+    return { error: "Choose at least one target: --codex, --claude, or --all" };
   }
 
   return {
@@ -84,18 +117,32 @@ function parseArgs(argv) {
   };
 }
 
+function parsePlatforms(args, fallback) {
+  if (args.has("--all")) {
+    return ["codex", "claude"];
+  }
+
+  const platforms = [];
+  if (args.has("--codex")) platforms.push("codex");
+  if (args.has("--claude")) platforms.push("claude");
+
+  return platforms.length > 0 ? platforms : fallback;
+}
+
 function copyDir(src, dest, { force, dryRun }) {
   if (!fs.existsSync(src)) {
     throw new Error(`Missing skill source: ${src}`);
   }
 
   const exists = fs.existsSync(dest);
-  if (exists && !force) {
-    return "skipped";
+  if (dryRun) {
+    if (exists && force) return "would overwrite";
+    if (exists) return "would skip";
+    return "would install";
   }
 
-  if (dryRun) {
-    return exists ? "would overwrite" : "would install";
+  if (exists && !force) {
+    return "skipped";
   }
 
   fs.rmSync(dest, { recursive: true, force: true });

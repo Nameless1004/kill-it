@@ -1,0 +1,4 @@
+interface:
+  display_name: "Requirements Killer"
+  short_description: "Ask missing-case questions until requirements are buildable."
+  default_prompt: "Run Requirements Killer on these requirements. Ask one focused question at a time about missing exceptions, boundaries, states, defaults, errors, permissions, and non-goals until the requirement is complete enough to build."
