@@ -31,10 +31,21 @@ Use these when you already know which weak spot to audit. `kill-it` pulls from t
 
 ## Install
 
-Copy any skill folder into your `.claude/skills/` directory (or the repo's skills path for your agent), then invoke it by name.
+Clone the repo, then run the initializer for your agent.
 
 ```bash
 git clone https://github.com/Nameless1004/kill-it.git
+cd kill-it
+npm link
+killit init --codex
+killit init --claude
 ```
+
+`killit init --codex` installs the skills into `~/.codex/skills`.
+`killit init --claude` installs the skills into `~/.claude/skills`.
+`killit remove --codex` removes the installed skills from `~/.codex/skills`.
+`killit remove --claude` removes the installed skills from `~/.claude/skills`.
+
+Use `--force` to overwrite existing installed folders, or `--dry-run` to preview the install.
 
 Each skill is a single `SKILL.md` — short enough to read in ten seconds, fork, and sharpen for your own use.

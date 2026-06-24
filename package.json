@@ -1,0 +1,25 @@
+{
+  "name": "kill-it",
+  "version": "0.1.0",
+  "description": "Adversarial agent skills that attack your ideas before reality does.",
+  "bin": {
+    "killit": "bin/killit.js"
+  },
+  "files": [
+    "bin",
+    "assumption-killer",
+    "bullshit-killer",
+    "deck-killer",
+    "hidden-cost-killer",
+    "kill-it",
+    "risk-killer",
+    "scope-creep-killer",
+    "trust-gap-killer",
+    "ux-friction-killer",
+    "README.md"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
