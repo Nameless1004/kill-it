@@ -36,6 +36,9 @@ Usage:
   killit init --codex
   killit init --claude
   killit init --all
+  killit update --codex
+  killit update --claude
+  killit update --all
   killit remove --codex
   killit remove --claude
   killit remove --all
@@ -54,6 +57,7 @@ function parseArgs(argv) {
   const args = new Set(argv);
   const validArgs = new Set([
     "init",
+    "update",
     "remove",
     "--codex",
     "--claude",
@@ -76,8 +80,8 @@ function parseArgs(argv) {
 
   const [entry] = argv;
   const command = entry;
-  if (command !== "init" && command !== "remove") {
-    return { error: "Expected command: init or remove" };
+  if (command !== "init" && command !== "update" && command !== "remove") {
+    return { error: "Expected command: init, update, or remove" };
   }
 
   const platforms = parsePlatforms(args, []);
@@ -89,7 +93,7 @@ function parseArgs(argv) {
   return {
     command,
     platforms,
-    force: args.has("--force"),
+    force: command === "update" || args.has("--force"),
     dryRun: args.has("--dry-run"),
   };
 }
@@ -154,7 +158,7 @@ function cleanupLegacy(targetRoot, { dryRun }) {
   return results;
 }
 
-function install({ platforms, force, dryRun }) {
+function install({ platforms, force, dryRun, command }) {
   let skipped = 0;
   let changed = 0;
   let legacyRemoved = 0;
@@ -193,8 +197,9 @@ function install({ platforms, force, dryRun }) {
         `Cleaned ${legacyRemoved} legacy folder${legacyRemoved === 1 ? "" : "s"}.`,
     );
   } else {
+    const verb = command === "update" ? "Updated" : "Installed";
     console.log(
-      `\nInstalled ${changed} skill folder${changed === 1 ? "" : "s"}. ` +
+      `\n${verb} ${changed} skill folder${changed === 1 ? "" : "s"}. ` +
         `Cleaned ${legacyRemoved} legacy folder${legacyRemoved === 1 ? "" : "s"}.`,
     );
   }
@@ -220,7 +225,7 @@ function remove({ platforms, dryRun }) {
     console.log("\nDry run only. No files changed.");
   } else {
     console.log(
-      `\nRemoved ${removed} Nameless skill folder${removed === 1 ? "" : "s"}. ` +
+      `\nRemoved ${removed} kill-it skill folder${removed === 1 ? "" : "s"}. ` +
         `${missing} already missing.`,
     );
   }
@@ -241,7 +246,7 @@ function main() {
     return;
   }
 
-  if (parsed.command === "init") {
+  if (parsed.command === "init" || parsed.command === "update") {
     install(parsed);
   } else {
     remove(parsed);

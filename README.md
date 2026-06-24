@@ -100,6 +100,15 @@ killit init --all --force
 killit init --all --dry-run
 ```
 
+Update installed skills after local changes:
+
+```bash
+killit update --codex
+killit update --claude
+killit update --all
+killit update --codex --dry-run
+```
+
 Remove installed skills:
 
 ```bash
