@@ -6,6 +6,11 @@ const path = require("node:path");
 
 const SKILLS = [
   "kill-it",
+  "concrete",
+];
+
+const LEGACY_SKILLS = [
+  "specify",
   "requirements-killer",
   "assumption-killer",
   "risk-killer",
@@ -164,9 +169,23 @@ function removeDir(dest, { dryRun }) {
   return "removed";
 }
 
+function cleanupLegacy(targetRoot, { dryRun }) {
+  const results = [];
+
+  for (const skill of LEGACY_SKILLS) {
+    const status = removeDir(path.join(targetRoot, skill), { dryRun });
+    if (status !== "missing") {
+      results.push({ skill, status });
+    }
+  }
+
+  return results;
+}
+
 function install({ platforms, force, dryRun }) {
   let skipped = 0;
   let changed = 0;
+  let legacyRemoved = 0;
 
   for (const platform of platforms) {
     const targetRoot = TARGETS[platform];
@@ -186,14 +205,26 @@ function install({ platforms, force, dryRun }) {
       if (status === "installed" || status === "overwritten") changed += 1;
       console.log(`  ${status.padEnd(15)} ${skill}`);
     }
+
+    const legacyResults = cleanupLegacy(targetRoot, { dryRun });
+    for (const { skill, status } of legacyResults) {
+      legacyRemoved += 1;
+      console.log(`  ${`${status} legacy`.padEnd(15)} ${skill}`);
+    }
   }
 
   if (dryRun) {
     console.log("\nDry run only. No files changed.");
   } else if (skipped > 0 && !force) {
-    console.log("\nExisting folders are skipped. Re-run with --force to overwrite them.");
+    console.log(
+      "\nExisting folders are skipped. Re-run with --force to overwrite them. " +
+        `Cleaned ${legacyRemoved} legacy folder${legacyRemoved === 1 ? "" : "s"}.`,
+    );
   } else {
-    console.log(`\nInstalled ${changed} skill folder${changed === 1 ? "" : "s"}.`);
+    console.log(
+      `\nInstalled ${changed} skill folder${changed === 1 ? "" : "s"}. ` +
+        `Cleaned ${legacyRemoved} legacy folder${legacyRemoved === 1 ? "" : "s"}.`,
+    );
   }
 }
 
@@ -205,7 +236,7 @@ function remove({ platforms, dryRun }) {
     const targetRoot = TARGETS[platform];
     console.log(`${platform}: ${targetRoot}`);
 
-    for (const skill of SKILLS) {
+    for (const skill of [...SKILLS, ...LEGACY_SKILLS]) {
       const status = removeDir(path.join(targetRoot, skill), { dryRun });
       if (status === "removed" || status === "would remove") removed += 1;
       if (status === "missing") missing += 1;

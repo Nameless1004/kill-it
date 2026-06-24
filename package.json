@@ -8,16 +8,8 @@
   },
   "files": [
     "bin",
-    "assumption-killer",
-    "bullshit-killer",
-    "deck-killer",
-    "hidden-cost-killer",
     "kill-it",
-    "requirements-killer",
-    "risk-killer",
-    "scope-creep-killer",
-    "trust-gap-killer",
-    "ux-friction-killer",
+    "concrete",
     "README.md"
   ],
   "license": "MIT",

@@ -2,8 +2,6 @@
 
 Personal skill repository for Nameless agent workflows.
 
-The first pack is **kill-it**: adversarial skills that attack ideas before reality does. They try to break a plan, PRD, pitch, design, or product bet, then name what survived, what can still kill it, and what the real weapon is.
-
 ## Setup
 
 Link the local CLI from this repo:
@@ -13,7 +11,7 @@ cd /Users/jaeho/Desktop/kill-it
 npm link
 ```
 
-Install the Nameless skills into Codex:
+Install into Codex:
 
 ```bash
 nameless init --codex
@@ -40,66 +38,100 @@ Targets:
 
 | Flag | Location |
 |---|---|
-| default / `--codex` | `~/.codex/skills` |
+| `--codex` | `~/.codex/skills` |
 | `--claude` | `~/.claude/skills` |
 | `--all` | both |
 
 Legacy commands like `killit init --codex` and `killit remove --codex` still work, but new docs should use `nameless init --codex`.
 
-## The front door: `/kill-it`
+## Skills
 
-An interactive, hostile interrogation. You bring an idea; it hunts the **blind spots** — the risk you left off the list, the question you didn't think to ask, the part you assumed away — one clean shot at a time, and waits for you to defend.
+| Skill | Use it for |
+|---|---|
+| `kill-it` | Stress-test ideas, plans, PRDs, pitches, and designs until the weak point is exposed |
+| `concrete` | Turn vague requirements, work specs, designs, or workflows into concrete executable specs |
 
-- Attacks what you *didn't* consider, not what you already defended
-- One attack at a time (multiple at once is noise)
-- Labels each hit by severity: **Instant Kill / Major Wound / Bleeding Risk / Scratch**
-- Ends with a synthesis: **Survived / Still Dangerous / Real Weapon / Next Proof / Verdict**
+## kill-it
 
-> Inspired by [Matt Pocock's `grill-me`](https://github.com/mattpocock/skills). Where `grill-me` is a teammate building shared understanding, `kill-it` is an adversary trying to make the idea collapse.
+`kill-it` is the adversarial front door. It attacks one weakness at a time, waits for the user's defense, labels each hit by severity, and ends by naming what survived.
 
-## How a session works
+- Attacks what the user did not consider, not what they already defended
+- One attack at a time
+- Severity labels: **Instant Kill / Major Wound / Bleeding Risk / Scratch**
+- Final synthesis: **Survived / Still Dangerous / Real Weapon / Next Proof / Verdict**
+
+Session shape:
 
 ```text
-Attack 1 -> your defense -> judgment
-Attack 2 -> your defense -> judgment
-Attack 3 -> your defense -> final synthesis
+Attack 1 -> defense -> judgment
+Attack 2 -> defense -> judgment
+Attack 3 -> defense -> final synthesis
 ```
 
-Each attack must be specific to the idea in front of it. If the critique could apply unchanged to any random product, it is too generic.
+The focused killer lenses are bundled inside `kill-it/killers/`, not installed as separate top-level skills:
 
-Final synthesis:
-
-```markdown
-## Survived
-- What held up under attack
-
-## Still Dangerous
-1. **Major Wound**: The unresolved risk that still matters
-
-## Real Weapon
-The strongest surviving advantage, insight, constraint, proof, or wedge.
-
-## Next Proof
-The one thing to prove next.
-
-## Verdict
-**Survived / Wounded / Dead**
-```
-
-## The arsenal: 9 killers
-
-Use these when you already know which weak spot to audit. `kill-it` pulls from them when you don't.
-
-| Skill | Kills |
+| Lens | Kills |
 |---|---|
-| `requirements-killer` | Missing requirements, exceptions, boundaries, defaults, errors, and non-goals |
 | `assumption-killer` | Hidden assumptions, unsupported optimism, unargued decisions |
 | `risk-killer` | Edge cases, integration failures, launch/ops fallout |
-| `bullshit-killer` | Vague claims, hype, jargon — rewrites to plain, defensible language |
-| `hidden-cost-killer` | Costs the plan forgot (API, ops, support, compliance) |
-| `scope-creep-killer` | Nonessential features and "while we're at it" additions |
-| `trust-gap-killer` | Where users, buyers, or regulators stop believing the system |
-| `ux-friction-killer` | Where users hesitate, misunderstand, or abandon |
+| `bullshit-killer` | Vague claims, hype, jargon, unsupported copy |
+| `hidden-cost-killer` | Forgotten API, ops, support, compliance, and migration costs |
+| `scope-creep-killer` | Nonessential features, hidden dependencies, MVP bloat |
+| `trust-gap-killer` | Places users, buyers, operators, or regulators stop trusting |
+| `ux-friction-killer` | Where users hesitate, misunderstand, abandon, or need missing states |
 | `deck-killer` | Weak claims and objections a skeptical room will raise |
 
-Each skill is a single `SKILL.md` — short enough to read in ten seconds, fork, and sharpen for your own use.
+## concrete
+
+`concrete` takes an abstract or incomplete artifact and keeps asking the missing questions until it is specific enough to execute.
+
+Bundled lenses live inside `concrete/lenses/`:
+
+| Lens | Use it for |
+|---|---|
+| `requirements` | PRDs, feature requests, acceptance criteria, product behavior |
+| `work-spec` | Engineering tasks, tickets, implementation plans, handoffs |
+| `design` | UI/UX flows, screen specs, interaction states, prototypes |
+| `workflow` | Operational processes, approvals, support paths, business handoffs |
+| `data-contract` | APIs, schemas, events, integrations, sync behavior |
+| `rollout` | Launches, migrations, releases, experiments, rollback paths |
+
+It focuses on missing:
+
+- Intent, success signals, defaults, and non-goals
+- Inputs, actors, permissions, ownership, and handoffs
+- Empty/loading/success/error/cancelled/retry states
+- Edge cases, limits, concurrency, vendor failure, and recovery paths
+- Data ownership, freshness, deletion, audit, and privacy
+
+Final output:
+
+```markdown
+## Execution Brief
+<directly usable work brief>
+
+- **Objective:** <specific outcome>
+- **User / Actor:** <who this is for or who performs it>
+- **In Scope:** <included behavior, screens, systems, or work items>
+- **Out of Scope:** <explicit exclusions>
+- **Primary Flow:** <step-by-step normal path>
+- **Key Decisions:** <decisions clarified>
+- **Dependencies:** <systems, data, approvals, designs, or constraints>
+- **Done When:** <observable completion criteria>
+
+## Concrete Spec
+<execution-ready spec>
+
+## Behavior Matrix
+| Case | Expected Behavior | Owner/State |
+|---|---|---|
+
+## Exceptions and Recovery
+- <exception> -> <handling>
+
+## Non-Goals
+- <excluded behavior>
+
+## Ready to Execute?
+Yes / No, because <reason>
+```

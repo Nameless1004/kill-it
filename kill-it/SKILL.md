@@ -12,6 +12,16 @@ Attack one weakness at a time. State the attack, then wait for the user to defen
 
 Draw from whichever angle bites hardest: false assumptions, hidden costs, scope creep, trust gaps, integration and launch failure modes, UX friction, comforting optimism. Prefer the angle they clearly did not see coming.
 
+The bundled killer lenses live under `killers/`. Use them as internal references when the user asks for a focused audit or when one lens clearly fits best:
+- `killers/assumption-killer`: hidden assumptions, unsupported optimism, unargued decisions
+- `killers/risk-killer`: edge cases, integration failures, launch/operations fallout
+- `killers/bullshit-killer`: vague claims, hype, jargon, unsupported copy
+- `killers/hidden-cost-killer`: API, ops, support, compliance, migration, opportunity costs
+- `killers/scope-creep-killer`: nonessential features, hidden dependencies, MVP cuts
+- `killers/trust-gap-killer`: trust, explainability, accountability, auditability
+- `killers/ux-friction-killer`: user hesitation, misunderstanding, abandonment, missing states
+- `killers/deck-killer`: pitch, board, sales, and investor objections
+
 Do not use a fixed attack sequence. Each attack must come from the specific idea in front of you. If your next attack could apply unchanged to any random product, it is too generic — choose a more local weakness.
 
 Label each attack by severity:
