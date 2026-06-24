@@ -48,23 +48,36 @@ If the request spans multiple lenses, start with the one most likely to block ex
 
 ## Question Format
 
+During the conversation, do not expose internal labels like lens, category, risk, current spec, locked decisions, or missing decision unless the user asks for a status summary. Keep those as private working notes.
+
+Ask in this user-facing format:
+
 ```markdown
-## Current Spec
-<one-sentence summary of what is currently known>
+<one sentence that reflects the decision already clarified, if useful>
 
-## Missing Decision
-**Lens:** <requirements / work-spec / design / workflow>
-**Category:** <intent / inputs / actors / states / boundaries / data / errors / defaults / constraints / non-goals>
-**Risk:** <what breaks if this remains unspecified>
+<one direct question>
 
-<one concrete question>
+Options, if helpful:
+A. <option>
+B. <option>
+C. <option>
 ```
+
+Default to one natural-language question. Use A/B/C/D options only when the decision has a few clear paths and options will make the user answer faster or more precisely. Do not turn the conversation into a survey.
+
+When you provide options:
+- Keep options mutually distinct.
+- Include tradeoffs only when they change the decision.
+- Leave room for a custom answer when the options may be incomplete.
+- Prefer a recommended default only when the context clearly supports it.
+
+Otherwise ask a plain question.
 
 Ask the question so it can be answered directly. Prefer "When X happens, should the system A, B, or C?" over broad questions like "What about errors?"
 
 ## Running Notes
 
-Maintain a compact working spec as the conversation progresses:
+Maintain a compact working spec internally as the conversation progresses. Do not show it by default:
 
 ```markdown
 ## Locked Decisions

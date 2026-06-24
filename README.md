@@ -104,6 +104,10 @@ It focuses on missing:
 - Edge cases, limits, concurrency, vendor failure, and recovery paths
 - Data ownership, freshness, deletion, audit, and privacy
 
+During questioning, `concrete` should not expose internal labels like lens, category, risk, or locked decisions by default. It asks one natural question at a time, then saves the structured working notes for the final artifact.
+
+It should not become a survey. A/B/C/D options are only for decisions with a few clear paths; otherwise it asks a plain question and leaves room for a custom answer.
+
 Final output:
 
 ```markdown
